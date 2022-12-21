@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+// in src/admin/index.tsx
+import { Admin, Resource, ListGuesser, Layout } from "react-admin";
+import jsonServerProvider from "ra-data-json-server";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { MyError } from "./error";
+
+const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+
+const MyLayout = (props) => <Layout
+    {...props}
+    error={MyError}
+/>;
+
+const App = () => (
+  <Admin layout={MyLayout} dataProvider={dataProvider}>
+    <Resource name="posts" list={ListGuesser} />
+    <Resource name="comments" list={ListGuesser} />
+    <Resource name="error" list={ListGuesser} />
+  </Admin>
+);
 
 export default App;
