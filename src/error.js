@@ -10,8 +10,6 @@ export const MyError = ({ error, errorInfo, resetErrorBoundary, ...rest }) => {
 	const { pathname } = useLocation();
 	const originalPathname = useRef(pathname);
 
-  console.log('Error!');
-
 	// Effect that resets the error state whenever the location changes
 	useEffect(() => {
 		if (pathname !== originalPathname.current) {
@@ -25,7 +23,7 @@ export const MyError = ({ error, errorInfo, resetErrorBoundary, ...rest }) => {
 		<div>
 			<Title title="Error" />
 			<h1>
-				<ErrorIcon /> Alarm
+				<ErrorIcon /> Only this errors catched
 			</h1>
 			<div>
 				A client error occurred and your request couldn not be
@@ -33,9 +31,9 @@ export const MyError = ({ error, errorInfo, resetErrorBoundary, ...rest }) => {
 			</div>
 			{process.env.NODE_ENV !== 'production' && (
 				<details>
-					<h2>{translate(error.toString())}</h2>
-					<p>{error.code}</p>
-					{errorInfo.componentStack}
+					<h2>{JSON.stringify(error)}</h2>
+					<p>{error?.code}</p>
+					{errorInfo?.componentStack}
 				</details>
 			)}
 			<div>
